@@ -3,17 +3,37 @@
   <head>
     <title>Hangman!</title>
     <style>
+    p {
+    color: white;
+    background-color: rgb(169, 169, 169, 0.6);
+    padding: 10px
+    }
       body {
+      background-color:#F8F8FF;
+      }
+      #blank {
+      color: white;
       }
       h1 {
         text-align: center;
+        color: white;
+        background-color: rgb(169, 169, 169, 0.6);
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #p1 { width: 250px;
+      margin-right: auto;
+      margin-left: auto;
+      font-weight: bold;
+      
       }
 
       #alphabet {
         text-align: center;
         margin-right: auto;
         margin-left: auto;
-        padding: 20px;
+        padding: 30px;
       }
 
       #word {
@@ -23,14 +43,15 @@
         font-weight: bold;
         padding: 20px;
         text-align: center;
+        color: rgb(100, 100, 100);
       }
 
       #info {
-        padding: 10px;
-        color: red;
-        background-color: rgb(0, 0, 128);
+        padding: 20px;
+        color: rgb(100, 100, 100);
+        background-color: white;
         text-align: center;
-   width: 400px; 
+   width: 200px; 
    margin-left:auto; 
    margin-right:auto;
    border-radius: 0.5em;
@@ -40,7 +61,10 @@
       #guesses {
         text-align: center;
         margin: auto;
-        padding: 10px;
+        padding: 20px;
+        color: rgb(169, 169, 169, 5.0);
+        background-color: white;
+        width: 200px;
       }
 
       #winner-image {
@@ -51,14 +75,15 @@
 
       #winner-message {
         text-align: center;
-        font-size: 1.5em;
+      font-size: 1.2em;
         color: white;
         display: none; /* Hide the message by default */
-        background-color: darkgray;
-        width: 700px;
+        background-color: rgb(169, 169, 169, 0.6);
+        width: 500px;
         margin-left: auto;
         margin-right: auto;
         border-radius: 10px;
+        padding:10px;
       }
       #buttonstyle{
       display: block;
@@ -70,6 +95,7 @@ background-color: rgb(169, 169, 169, 0.5)
 ;
 padding: 5px;
 cursor: pointer;
+border-color: rgb(169, 169, 169, 1.25);
       }
       #buttonstyle:hover {
   background-color: gray; /* Changes background color on hover */
@@ -79,7 +105,26 @@ cursor: pointer;
 center;
 margin-left: auto;
 margin-right: auto;
+width: 500px;
 
+}
+.letter:hover {
+  background-color: gray; /* Changes background color on hover */
+  color: white; /* Changes text color on hover */
+  }
+  .letter1{
+background-color: white;
+width: 650px;
+margin-left: auto;
+margin-right: auto;
+padding: 5px;
+}
+.letter{
+background-color: rgb(169, 169, 169, 0.6);
+padding: 3.75px;
+color: white;
+cursor: pointer;
+padding: 5px;
 }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -160,12 +205,20 @@ margin-right: auto;
     </script>
   </head>
   <body>
-    <h1>Figure Out The Best Military Branch!</h1>
+    <h1>Figure Out The Best U.S. Military Branch!</h1>
+    <br>
+ 
+    
     <div id="guesses"></div>
+    <br>
     <div id="info"></div>
+    <br>
     <div id="word"></div>
     <div id="alphabet">
-      <p>Click to make a guess!</p>
+      <p id="p1">Click a letter below to make a guess!</p>
+     <br>
+     <br>
+      <div class="letter1">
       <span class="letter" id="a">A</span>
       <span class="letter" id="b">B</span>
       <span class="letter" id="c">C</span>
@@ -193,12 +246,18 @@ margin-right: auto;
       <span class="letter" id="y">Y</span>
       <span class="letter" id="z">Z</span>
     </div>
+    </div>
     <div id="winner-message">You've figured out the best military branch: MARINES!</div>
+    <br>
+     <br>
     <div id="winner-image">
       <img src="https://th.bing.com/th/id/R.7f9da073208ab4877f03c025e13ae574?rik=onTcmlsmAq3PBQ&riu=http%3a%2f%2fwallsdesk.com%2fwp-content%2fuploads%2f2017%2f01%2fMarine-Corps-HD-Background-.jpg&ehk=Afla1S1AD0%2baNp39JZ7rhG93fVsRNbCSk39Ovab7ah8%3d&risl=&pid=ImgRaw&r=0" 
         alt="Marine Corps" style="width: 100%; max-width: 600px;" />
     </div>
     <br>
+    <br>
     <button id="buttonstyle">Click to reveal or unreveal a hint</button>
+    <br>
   </body>
 </html>
+
