@@ -89,12 +89,17 @@
                     
                      
                       // check if the player has won the game
-
+                      if (!blank.includes("*")) {
+                        gameWon = true;
+                        $("#info").text("Your figured out the best military branch!");
+                      }
 
                     }
 
                     // add the letter to letters already tried
-
+                  triedLetters = triedLetters + letter; 
+                    console.log("triedLetters is ", triedLetters);
+                     console.log ("word is", word);
                   }
               });
 
