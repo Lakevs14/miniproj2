@@ -3,89 +3,121 @@
   <head>
     <title>Hangman!</title>
     <style>
-    body {
-    color: light gray;
-    background-color: 
-    }
-    h1 { text-align: center;
-    }
+      body {
+      }
+      h1 {
+        text-align: center;
+      }
+
       #alphabet {
-      text-align: center;
+        text-align: center;
         margin-right: auto;
         margin-left: auto;
         padding: 20px;
       }
+
       #word {
         margin: auto;
-        font-size: 2em; /* Fixed font size */
+        font-size: 2em;
         font-family: serif;
         font-weight: bold;
         padding: 20px;
         text-align: center;
       }
+
       #info {
-        padding: 20px;
+        padding: 10px;
         color: red;
         background-color: rgb(0, 0, 128);
+        text-align: center;
+   width: 400px; 
+   margin-left:auto; 
+   margin-right:auto;
+   border-radius: 0.5em;
+   
       }
-      .decoration {
-      text-align: center;
-      }
-      #guesses {
-  text-align: center; /* Centers the text horizontally */
-  margin: auto; /* Ensures proper alignment */
-  padding: 10px; /* Optional: Adds space around the text */
-}
 
+      #guesses {
+        text-align: center;
+        margin: auto;
+        padding: 10px;
+      }
+
+      #winner-image {
+        display: none; /* Hide the image by default */
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      #winner-message {
+        text-align: center;
+        font-size: 1.5em;
+        color: white;
+        display: none; /* Hide the message by default */
+        background-color: darkgray;
+        width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+      }
+      #buttonstyle{
+      display: block;
+margin-left: auto;
+margin-right: auto;
+border-radius: 10px;
+color: white; 
+background-color: rgb(169, 169, 169, 0.5)
+;
+padding: 5px;
+cursor: pointer;
+      }
+      #buttonstyle:hover {
+  background-color: gray; /* Changes background color on hover */
+  color: white; /* Changes text color on hover */
+}
+#hint { text-align: 
+center;
+margin-left: auto;
+margin-right: auto;
+
+}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <div class= "decoration">
     <script>
       $(document).ready(function () {
-        // Secret word
         const word = "MARINES";
         let blank = "* * * * * * *"; // Represents the hidden word
         $("#word").text(blank);
 
-        // List of tried letters
         let triedLetters = "";
-
-        // Number of tries left
         let tries = 10;
         $("#guesses").text("Guesses left: " + tries);
 
-        // Track game state
         let gameWon = false;
         let gameLost = false;
 
-        // When a letter is clicked
         $(".letter").click(function () {
           if (!gameWon && !gameLost) {
-            // Clear info box
             $("#info").text("");
 
-            // Get clicked letter
             const letter = $(this).text();
-            console.log("Clicked on:", letter);
 
-            // Mark letter as clicked
-            $(this).css("text-decoration", "line-through");
+            // Apply fade-out and fade-in effect
+            $(this).fadeOut(1000, function () {
+               // Optional: Restore the letter visibly
+            });
 
-            // If letter already tried
             if (triedLetters.includes(letter)) {
               $("#info").text("Letter " + letter + " already tried.");
             } else if (!word.includes(letter)) {
-              // Incorrect guess
               tries--;
               $("#guesses").text("Mistakes left: " + tries);
 
-              // Check if player lost
               if (tries < 1) {
                 gameLost = true;
                 $("#info").text("You couldn't figure out the best military branch!");
               }
             } else {
-              // Correct guess
               let newBlank = blank.split(" ");
               for (let i = 0; i < word.length; i++) {
                 if (word[i] === letter) {
@@ -95,21 +127,37 @@
               blank = newBlank.join(" ");
               $("#word").text(blank);
 
-              // Check if player won
               if (!blank.includes("*")) {
                 gameWon = true;
-                $("#info").text("You've figured out the best military branch: MARINES!");
+                $("#info").text("Semper Fi!");
+                // Show the winner image and message
+                $("#winner-image").show();
+                $("#winner-message").show();
               }
             }
 
-            // Add letter to tried letters
             triedLetters += letter;
-            console.log("Tried letters:", triedLetters);
           }
         });
       });
     </script>
-    </div>
+    <script>
+  $(document).ready(function () {
+  $("#buttonstyle").click(function () {
+    // Check if the paragraph already exists
+    if ($("#hint").length === 0) {
+      // If it doesn't exist, create and append it
+      $("<p id='hint'>This military branch was born in Philadelphia, Pennsylvania, in Tun Tavern 1775.</p>")
+        .hide() // Initially hides the paragraph
+        .appendTo("body"); // Appends it to the <body> or any specific container
+    }
+    // Toggles visibility of the paragraph
+    $("#hint").fadeToggle(1000); // Fades in/out dynamically
+  });
+});
+
+
+    </script>
   </head>
   <body>
     <h1>Figure Out The Best Military Branch!</h1>
@@ -145,5 +193,12 @@
       <span class="letter" id="y">Y</span>
       <span class="letter" id="z">Z</span>
     </div>
+    <div id="winner-message">You've figured out the best military branch: MARINES!</div>
+    <div id="winner-image">
+      <img src="https://th.bing.com/th/id/R.7f9da073208ab4877f03c025e13ae574?rik=onTcmlsmAq3PBQ&riu=http%3a%2f%2fwallsdesk.com%2fwp-content%2fuploads%2f2017%2f01%2fMarine-Corps-HD-Background-.jpg&ehk=Afla1S1AD0%2baNp39JZ7rhG93fVsRNbCSk39Ovab7ah8%3d&risl=&pid=ImgRaw&r=0" 
+        alt="Marine Corps" style="width: 100%; max-width: 600px;" />
+    </div>
+    <br>
+    <button id="buttonstyle">Click to reveal or unreveal a hint</button>
   </body>
 </html>
