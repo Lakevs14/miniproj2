@@ -3,144 +3,127 @@
   <head>
     <title>Hangman!</title>
     <style>
-      #alphabet { margin: auto;
-                  padding: 20px; }
-      #word { margin: auto;
-              font: 400em serif bold;
-              padding: 20px;
-            }
-      #info { padding: 20px; 
-              font-color: red;
-              background-color: yellow; 
-            }
+      #alphabet {
+        margin: auto;
+        padding: 20px;
+      }
+      #word {
+        margin: auto;
+        font-size: 2em; /* Fixed font size */
+        font-family: serif;
+        font-weight: bold;
+        padding: 20px;
+      }
+      #info {
+        padding: 20px;
+        color: red;
+        background-color: yellow;
+      }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-         $(document).ready( function() {
-              // this is the secret word!
-              word =  "M A R I N E S";
-              blank = "* * * * * * *";
+      $(document).ready(function () {
+        // Secret word
+        const word = "MARINES";
+        let blank = "* * * * * * *"; // Represents the hidden word
+        $("#word").text(blank);
+
+        // List of tried letters
+        let triedLetters = "";
+
+        // Number of tries left
+        let tries = 10;
+        $("#guesses").text("Guesses left: " + tries);
+
+        // Track game state
+        let gameWon = false;
+        let gameLost = false;
+
+        // When a letter is clicked
+        $(".letter").click(function () {
+          if (!gameWon && !gameLost) {
+            // Clear info box
+            $("#info").text("");
+
+            // Get clicked letter
+            const letter = $(this).text();
+            console.log("Clicked on:", letter);
+
+            // Mark letter as clicked
+            $(this).css("text-decoration", "line-through");
+
+            // If letter already tried
+            if (triedLetters.includes(letter)) {
+              $("#info").text("Letter " + letter + " already tried.");
+            } else if (!word.includes(letter)) {
+              // Incorrect guess
+              tries--;
+              $("#guesses").text("Mistakes left: " + tries);
+
+              // Check if player lost
+              if (tries < 1) {
+                gameLost = true;
+                $("#info").text("You couldn't figure out the best military branch!");
+              }
+            } else {
+              // Correct guess
+              let newBlank = blank.split(" ");
+              for (let i = 0; i < word.length; i++) {
+                if (word[i] === letter) {
+                  newBlank[i] = letter;
+                }
+              }
+              blank = newBlank.join(" ");
               $("#word").text(blank);
 
-              // this is the list of letters that have been tried
-              triedLetters = "";
+              // Check if player won
+              if (!blank.includes("*")) {
+                gameWon = true;
+                $("#info").text("You've figured out the best military branch: MARINES!");
+              }
+            }
 
-              // this is the number of tries left
-              tries = 10;
-              $("#guesses").text("Guesses left: "+tries);
-
-              // boolean (true / false variable) to track if game has been won or lost
-              gameWon = false;
-              gameLost = false;
-                   
-              // when a user clicks on a letter... this is where everything happens!
-              $(".letter").click( function() {
-
-                  // check if the game has been won or lost
-                  if (gameWon != true && gameLost != true) {
-                    // erase the info box
-                    
-                $("#info").text("");
-                    // use text to get the letter that was clicked on
-                letter = $(this).text();
-                console.log("clicked on: ", letter)
-
-                    // make a line through the letter
-                 $(this).css("text-decoration", "line-through");
-                    // if the letter has already been clicked on, 
-                    // let the user know it's already been tried
-                    if (triedLetters.includes(letter)) {
-                    $("#info").text("letter" + letter + "already tried.");
-
-                    // if the letter isn't in the word, reduce
-                    // the number of tries and check if they lost
-                    } else if (! word.includes(letter)) {
-
-                      // reduce the number of remaining tries by 1
-                   tried = tried - 1;
-                   $("#guesses").text("Mistakes, left: " + tried); 
-                   
-
-                      // are they out of tries? then they lost!
-
-                    if (tries < 1) {
-                    gameLost = true;
-                    $("#info").text("You're Out Of Tries! Game Lost!");
-                    }
-                    
-                    // otherwise, put a line through it and
-                    // add it to the found letters
-                    // and check if the player won or lost
-                    } else {
-
-                      // replace the blanks in the blanks variable 
-                      // with the letter that was clicked on
-                      // replace the blanks with letter in blank
-                      // and replace the letters with blanks in word
-                      while (word.includes(letter)) {
-                        word.indexOf(letter); 
-                        console.log("index of word is " + index);
-                        word = word.substring(0, index) + "" + word.substring((index+1))
-                        blank = blank.substring(0, index) + letter + blank.substring((index+1))
-                        $("#word").text(blank);
-                        console.log("word is", word);
-                        console.log("blank is", blank);
-                      }
-                    
-                     
-                      // check if the player has won the game
-                      if (!blank.includes("*")) {
-                        gameWon = true;
-                        $("#info").text("Your figured out the best military branch!");
-                      }
-
-                    }
-
-                    // add the letter to letters already tried
-                  triedLetters = triedLetters + letter; 
-                    console.log("triedLetters is ", triedLetters);
-                     console.log ("word is", word);
-                  }
-              });
-
-             // 
-           
-         });
-      
+            // Add letter to tried letters
+            triedLetters += letter;
+            console.log("Tried letters:", triedLetters);
+          }
+        });
+      });
     </script>
   </head>
   <body>
-     <h1>Let's play Hangman!</h1>
-     <div id="guesses"></div>
-     <div id="info"></div>
-     <div id="word"></div>
-     <div id="alphabet"><p>Click to make a guess!</p>
-     <span class="letter" id="a">a</span>
-     <span class="letter" id="b">b</span>
-     <span class="letter" id="c">c</span>
-     <span class="letter" id="d">d</span>
-     <span class="letter" id="e">e</span>
-     <span class="letter" id="f">f</span>
-     <span class="letter" id="g">g</span>
-     <span class="letter" id="h">h</span>
-     <span class="letter" id="i">i</span>
-     <span class="letter" id="j">j</span>
-     <span class="letter" id="k">k</span>
-     <span class="letter" id="l">l</span>
-     <span class="letter" id="m">m</span>
-     <span class="letter" id="n">n</span>
-     <span class="letter" id="o">o</span>
-     <span class="letter" id="p">p</span>  
-     <span class="letter" id="q">q</span>
-     <span class="letter" id="r">r</span>
-     <span class="letter" id="s">s</span>
-     <span class="letter" id="t">t</span>
-     <span class="letter" id="u">u</span>
-     <span class="letter" id="v">v</span>
-     <span class="letter" id="w">w</span>  
-     <span class="letter" id="x">x</span>
-     <span class="letter" id="y">y</span>
-     <span class="letter" id="z">z</span>  
-     </div>
+    <h1>Let's play Hangman!</h1>
+    <div id="guesses"></div>
+    <div id="info"></div>
+    <div id="word"></div>
+    <div id="alphabet">
+      <p>Click to make a guess!</p>
+      <span class="letter" id="a">A</span>
+      <span class="letter" id="b">B</span>
+      <span class="letter" id="c">C</span>
+      <span class="letter" id="d">D</span>
+      <span class="letter" id="e">E</span>
+      <span class="letter" id="f">F</span>
+      <span class="letter" id="g">G</span>
+      <span class="letter" id="h">H</span>
+      <span class="letter" id="i">I</span>
+      <span class="letter" id="j">J</span>
+      <span class="letter" id="k">K</span>
+      <span class="letter" id="l">L</span>
+      <span class="letter" id="m">M</span>
+      <span class="letter" id="n">N</span>
+      <span class="letter" id="o">O</span>
+      <span class="letter" id="p">P</span>
+      <span class="letter" id="q">Q</span>
+      <span class="letter" id="r">R</span>
+      <span class="letter" id="s">S</span>
+      <span class="letter" id="t">T</span>
+      <span class="letter" id="u">U</span>
+      <span class="letter" id="v">V</span>
+      <span class="letter" id="w">W</span>
+      <span class="letter" id="x">X</span>
+      <span class="letter" id="y">Y</span>
+      <span class="letter" id="z">Z</span>
+    </div>
   </body>
 </html>
