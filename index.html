@@ -3,8 +3,16 @@
   <head>
     <title>Hangman!</title>
     <style>
+    body {
+    color: light gray;
+    background-color: 
+    }
+    h1 { text-align: center;
+    }
       #alphabet {
-        margin: auto;
+      text-align: center;
+        margin-right: auto;
+        margin-left: auto;
         padding: 20px;
       }
       #word {
@@ -13,14 +21,25 @@
         font-family: serif;
         font-weight: bold;
         padding: 20px;
+        text-align: center;
       }
       #info {
         padding: 20px;
         color: red;
-        background-color: yellow;
+        background-color: rgb(0, 0, 128);
       }
+      .decoration {
+      text-align: center;
+      }
+      #guesses {
+  text-align: center; /* Centers the text horizontally */
+  margin: auto; /* Ensures proper alignment */
+  padding: 10px; /* Optional: Adds space around the text */
+}
+
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <div class= "decoration">
     <script>
       $(document).ready(function () {
         // Secret word
@@ -90,9 +109,10 @@
         });
       });
     </script>
+    </div>
   </head>
   <body>
-    <h1>Let's play Hangman!</h1>
+    <h1>Figure Out The Best Military Branch!</h1>
     <div id="guesses"></div>
     <div id="info"></div>
     <div id="word"></div>
